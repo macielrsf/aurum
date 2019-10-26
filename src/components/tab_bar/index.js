@@ -9,6 +9,8 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import { tintColor } from '~/helpers/theme';
+
 const styles = StyleSheet.create({
     content: {
         backgroundColor: '#323b42',
@@ -37,7 +39,7 @@ export default class ATabBarButton extends Component {
     
     render() {
         const { routeName, focused } = this.props;
-        const color = focused ? '#00B7FF' : '#FFF';
+        const color = focused ? tintColor : '#FFF';
 
         return (
             <TouchableWithoutFeedback {...this.props}>
