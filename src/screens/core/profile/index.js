@@ -1,13 +1,78 @@
 import React, { Component } from 'react';
 import {
-    View
+    View,
+    Text,
+    StyleSheet
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import { connect } from 'react-redux';
 
-export default class Profile extends Component {
+import {
+    AContainer,
+    AButton
+} from '~/components';
+
+const styles = StyleSheet.create({
+    content: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 0.5
+    },
+    header: {
+        alignItems: 'flex-start',
+        justifyContent: 'flex-end',
+        padding: 35,
+        flex: 0.3
+    },
+    title: {
+        fontSize: 33,
+        fontWeight: 'bold',
+        paddingBottom: 20
+    },
+    user: {
+        fontSize: 16,
+        fontWeight: 'bold'
+    }
+});
+
+class Profile extends Component {
+    _logout = async () => {
+        try {
+            await AsyncStorage.removeItem('@auth');
+            this.props.navigation.navigate('Auth');
+        }
+        catch(e) {
+            console.warn(e);
+        }
+    }
 
     render() {
         return (
-            <View />
+            <AContainer>
+                <View style={styles.header}>
+                    <Text style={styles.title}>
+                        Usuário
+                    </Text>
+                    <Text style={styles.user}>
+                        {this.props.user}
+                    </Text>
+                </View>
+                <View style={styles.content}>
+                    <AButton onPress={this._logout}>
+                        SAIR
+                    </AButton>
+                </View>
+            </AContainer>
         );
     }
 }
+
+const actions = null
+
+const mapStateToProps = (state) => {
+    return ({
+        user: state.LoginReducer.user
+    })
+}
+
+export default connect(mapStateToProps, actions)(Profile);

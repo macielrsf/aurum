@@ -23,25 +23,23 @@ const AuthStack = createStackNavigator({
 });
 
 const HomeStack = createBottomTabNavigator({    
-    Processes: { 
-        screen: Screens.Processes,
+        Processes: Screens.Processes,
+        Profile: Screens.Profile, 
     },
-    Profile: { 
-        screen: Screens.Profile
+    {
+        navigationOptions: {
+            header: null
+        },
+        defaultNavigationOptions: ({ navigation }) => ({
+            tabBarButtonComponent: (props) => (
+                <ATabBarButton
+                    routeName={navigation.state.routeName}
+                    {...props}
+                />
+            )
+        })
     }
-}, {
-    navigationOptions: {
-        header: null
-    },
-    defaultNavigationOptions: ({ navigation }) => ({
-        tabBarButtonComponent: (props) => (
-            <ATabBarButton
-                routeName={navigation.state.routeName}
-                {...props}
-            />
-        )
-    })
-})
+);
 
 const AppStack = createStackNavigator({
     Home: { screen: HomeStack }

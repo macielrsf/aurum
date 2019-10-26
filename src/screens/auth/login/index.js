@@ -14,6 +14,11 @@ import {
     AInput
 } from '~/components';
 
+import {
+    changeUser,
+    changePassword
+} from './actions';
+
 const styles = StyleSheet.create({
     content: {
         alignItems: 'center',
@@ -70,6 +75,8 @@ class Login extends Component {
                             autoCapitalize="none"
                             onSubmitEditing={() => this.password.getRef().focus()}
                             returnKeyType="next"
+                            onChangeText={text => this.props.changeUser(text)}
+                            value={this.props.user}
                         />
                     </View>
                     <View>
@@ -78,6 +85,8 @@ class Login extends Component {
                             placeholder="Senha" 
                             secureTextEntry
                             onSubmitEditing={this._login}
+                            onChangeText={text => this.props.changePassword(text)}
+                            value={this.props.password}
                         />
                     </View>
                     <View style={styles.button}>
@@ -91,11 +100,15 @@ class Login extends Component {
     }
 }
 
-const actions = null
+const actions = {
+    changeUser,
+    changePassword
+}
 
 const mapStateToProps = (state) => {
     return ({
-
+        user: state.LoginReducer.user,
+        password: state.LoginReducer.password
     })
 }
 

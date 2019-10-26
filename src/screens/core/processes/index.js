@@ -6,7 +6,6 @@ import {
     StyleSheet,
     ActivityIndicator
 } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 
 import {
@@ -31,16 +30,6 @@ class Processes extends Component {
         this.props.load();
     }
 
-    _logout = async () => {
-        try {
-            await AsyncStorage.removeItem('@auth');
-            this.props.navigation.navigate('Auth');
-        }
-        catch(e) {
-            console.warn(e);
-        }
-    }
-
     _renderContent() {
         if ( this.props.loading ) {
             return (
@@ -52,7 +41,7 @@ class Processes extends Component {
         }
 
         return (
-            <Button title="Sair" onPress={this._logout} />
+            <View />
         );
     }
 
