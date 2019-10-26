@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import {
     createAppContainer,
     createSwitchNavigator
 } from 'react-navigation';
-import {
-    createStackNavigator
-} from 'react-navigation-stack';
-import {
-    createBottomTabNavigator
-} from 'react-navigation-tabs';
 
 import * as Screens from './screens';
 
 import configureStore from './reducers';
+
+import { ATabBarButton } from '~/components';
 
 const { store } = configureStore();
 
@@ -24,8 +23,24 @@ const AuthStack = createStackNavigator({
 });
 
 const HomeStack = createBottomTabNavigator({    
-    Processes: { screen: Screens.Processes },
-    Profile: { screen: Screens.Profile }
+    Processes: { 
+        screen: Screens.Processes,
+    },
+    Profile: { 
+        screen: Screens.Profile
+    }
+}, {
+    navigationOptions: {
+        header: null
+    },
+    defaultNavigationOptions: ({ navigation }) => ({
+        tabBarButtonComponent: (props) => (
+            <ATabBarButton
+                routeName={navigation.state.routeName}
+                {...props}
+            />
+        )
+    })
 })
 
 const AppStack = createStackNavigator({

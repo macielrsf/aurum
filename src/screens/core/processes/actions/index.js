@@ -13,8 +13,6 @@ export const load = () => {
 
         http.get(url)
             .then(res => {
-                console.warn(res.data);
-
                 if ( res.data.cases && res.data.cases.length > 0 ) {
                     dispatch( {
                         type: types.CASES_LOADED,

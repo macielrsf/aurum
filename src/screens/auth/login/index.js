@@ -64,12 +64,20 @@ class Login extends Component {
                 </View>
                 <View style={styles.content}>
                     <View style={styles.input}>
-                        <AInput placeholder="Usuário" />
+                        <AInput 
+                            placeholder="Usuário" 
+                            textContentType="emailAddress"
+                            autoCapitalize="none"
+                            onSubmitEditing={() => this.password.getRef().focus()}
+                            returnKeyType="next"
+                        />
                     </View>
                     <View>
                         <AInput 
+                            ref={(r) => this.password = r}
                             placeholder="Senha" 
                             secureTextEntry
+                            onSubmitEditing={this._login}
                         />
                     </View>
                     <View style={styles.button}>

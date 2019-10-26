@@ -25,6 +25,8 @@ const styles = StyleSheet.create({
 
 export default class AInput extends Component {
 
+    getRef = () => this.ref;
+
     render() {
         const { style } = this.props;
         
@@ -32,6 +34,7 @@ export default class AInput extends Component {
             <View style={styles.box}>
                 <TextInput
                     {...this.props}
+                    ref={(r) => this.ref = r}
                     style={[style, styles.input]}
                 />
             </View>

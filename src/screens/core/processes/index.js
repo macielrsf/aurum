@@ -26,9 +26,6 @@ const styles = StyleSheet.create({
 });
 
 class Processes extends Component {
-    static navigationOptions = {
-        header: null
-    };
 
     componentDidMount() {
         this.props.load();
