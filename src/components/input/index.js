@@ -6,13 +6,15 @@ import {
     View
 } from 'react-native';
 
+import { bgColor } from '~/helpers/theme';
+
 const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     box: {
         borderRadius: 8,
         borderWidth: 1.5,
-        borderColor: '#D6D6D6',
+        borderColor: bgColor,
         height: 50,
         width: width - 70
     },

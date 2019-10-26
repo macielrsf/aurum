@@ -4,7 +4,8 @@ import {
     Button,
     Text,
     StyleSheet,
-    ActivityIndicator
+    ActivityIndicator,
+    FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -18,7 +19,7 @@ import {
     AInput
 } from '~/components';
 
-import { tintColor } from '~/helpers/theme';
+import { tintColor, bgColor } from '~/helpers/theme';
 
 const styles = StyleSheet.create({
     loading: {
@@ -34,8 +35,7 @@ const styles = StyleSheet.create({
         flex: 0.4
     },
     content: {
-        padding: 25,
-        flex: 0
+        flex: 1
     },
     title: {
         fontSize: 33,
@@ -43,6 +43,10 @@ const styles = StyleSheet.create({
     },
     search: {
         flexDirection: 'column'
+    },
+    divider: {
+        borderBottomColor: bgColor,
+        borderBottomWidth: 0.5
     }
 });
 
@@ -68,6 +72,19 @@ class Processes extends Component {
         });
     }
 
+    _renderItem = ({ item, idx }) => {
+        return (
+            <Fragment>
+                <View style={styles.divider} />
+                <View style={{ padding: 30 }}>
+                    <Text>
+                        {item.title}
+                    </Text>
+                </View>
+            </Fragment>
+        );
+    }
+
     _renderHeader() {
         if ( this.state.showSearch ) {
             return (
@@ -77,7 +94,7 @@ class Processes extends Component {
                         color={tintColor} 
                         size={30} 
                         onPress={this._toggleSearch}
-                        style={{ paddingBottom: 30 }}
+                        style={{ paddingBottom: 10 }}
                     />
                     <AInput 
                         placeholder="Buscar..."
@@ -119,6 +136,11 @@ class Processes extends Component {
                     {this._renderHeader()}
                 </View>
                 <View style={styles.content}>
+                    <FlatList
+                        keyExtractor={(item, id) => item.id}
+                        renderItem={this._renderItem}
+                        data={this.props.cases}
+                    />
                 </View>
             </Fragment>
         );
