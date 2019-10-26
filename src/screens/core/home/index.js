@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 
 import {
-    Container
+    AContainer
 } from '~/components';
 
 const styles = StyleSheet.create({
@@ -34,9 +34,9 @@ class Home extends Component {
 
     render() {
         return (
-            <Container style={styles.container}>
+            <AContainer style={styles.container}>
                 <Button title="Sair" onPress={this._logout} />
-            </Container>
+            </AContainer>
         );
     }
 }

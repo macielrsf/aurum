@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import {
     View,
     StyleSheet,
-    SafeAreaView
+    SafeAreaView,
+    TouchableWithoutFeedback,
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native';
 
 const defaultStyle = StyleSheet.create({
@@ -11,16 +15,39 @@ const defaultStyle = StyleSheet.create({
     }
 })
 
-export default class Container extends Component {
+export default class AContainer extends Component {
 
-    render() {
+    _renderContent() {
         const { style } = this.props;
 
+        if ( this.props.form ) {
+            return (
+                <TouchableWithoutFeedback
+                    onPress={() => Keyboard.dismiss()}
+                    acessible={false}>
+                    <KeyboardAvoidingView
+                        behavior={Platform.select({
+                            ios: 'padding',
+                            android: null
+                        })}
+                        style={[style, defaultStyle.container]}>
+                        {this.props.children}
+                    </KeyboardAvoidingView>
+                </TouchableWithoutFeedback>
+            );
+        }
+
+        return (
+            <View style={[style, defaultStyle.container]}>
+                {this.props.children}
+            </View>
+        );
+    }
+
+    render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>
-                <View style={[defaultStyle, style]}>
-                    {this.props.children}
-                </View>
+                {this._renderContent()}
             </SafeAreaView>
         );
     }

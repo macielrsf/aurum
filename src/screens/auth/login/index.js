@@ -2,24 +2,46 @@ import React, { Component } from 'react';
 import {
     View,
     StyleSheet,
-    Button
+    Button,
+    Text
 } from 'react-native';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import {
-    Container
+    AContainer,
+    AButton,
+    AInput
 } from '~/components';
 
 const styles = StyleSheet.create({
-    container: {
+    content: {
         alignItems: 'center',
         justifyContent: 'center',
-        flex: 1
+        flex: 0
+    },
+    input: {
+        paddingBottom: 15
+    },
+    button: {
+        paddingTop: 40
+    },
+    header: {
+        alignItems: 'flex-start',
+        justifyContent: 'flex-end',
+        padding: 35,
+        flex: 0.5
+    },
+    title: {
+        fontSize: 28,
+        fontWeight: 'bold'
     }
 });
 
 class Login extends Component {
+    static navigationOptions = {
+        header: null
+    };
 
     _login = async () => {
         try {
@@ -33,9 +55,26 @@ class Login extends Component {
 
     render() {
         return (
-            <Container style={styles.container}>
-                <Button title="Login" onPress={this._login}/>
-            </Container>
+            <AContainer form={true}>
+                <View style={styles.header}>
+                    <Text style={styles.title}>
+                        Login
+                    </Text>
+                </View>
+                <View style={styles.content}>
+                    <View style={styles.input}>
+                        <AInput placeholder="Usuário" />
+                    </View>
+                    <View>
+                        <AInput placeholder="Senha" />
+                    </View>
+                    <View style={styles.button}>
+                        <AButton onPress={this._login}>
+                            ENTRAR
+                        </AButton>
+                    </View>
+                </View>
+            </AContainer>
         );
     }
 }

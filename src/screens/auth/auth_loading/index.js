@@ -9,7 +9,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 
 import {
-    Container
+    AContainer
 } from '~/components';
 
 import logo from '~/assets/logo.png';
@@ -42,13 +42,13 @@ export default class AuthLoading extends Component {
 
     render() {
         return (
-            <Container style={styles.container}>
+            <AContainer style={styles.container}>
                 <Image 
                     source={logo} 
                     style={styles.logo}
                     resizeMode="contain"
                 />
-            </Container> 
+            </AContainer> 
         );
     }
 }
