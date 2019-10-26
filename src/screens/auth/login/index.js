@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 28,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#485357'
     }
 });
 
@@ -66,7 +67,10 @@ class Login extends Component {
                         <AInput placeholder="Usuário" />
                     </View>
                     <View>
-                        <AInput placeholder="Senha" />
+                        <AInput 
+                            placeholder="Senha" 
+                            secureTextEntry
+                        />
                     </View>
                     <View style={styles.button}>
                         <AButton onPress={this._login}>

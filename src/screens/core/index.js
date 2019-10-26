@@ -1,1 +1,2 @@
-export Home from './home';
+export Processes from './processes';
+export Profile from './profile';

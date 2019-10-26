@@ -7,6 +7,9 @@ import {
 import {
     createStackNavigator
 } from 'react-navigation-stack';
+import {
+    createBottomTabNavigator
+} from 'react-navigation-tabs';
 
 import * as Screens from './screens';
 
@@ -20,8 +23,13 @@ const AuthStack = createStackNavigator({
     initialRouteName: 'Login'
 });
 
+const HomeStack = createBottomTabNavigator({    
+    Processes: { screen: Screens.Processes },
+    Profile: { screen: Screens.Profile }
+})
+
 const AppStack = createStackNavigator({
-    Home: { screen: Screens.Home }
+    Home: { screen: HomeStack }
 }, {
     initialRouteName: 'Home'
 });
