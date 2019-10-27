@@ -26,12 +26,12 @@ const styles = StyleSheet.create({
 });
 
 const iconMap = {
-    Processes: 'folder-open',
+    Cases: 'folder-open',
     Profile: 'person-outline'
 };
 
 const labelMap = {
-    Processes: 'PROCESSOS',
+    Cases: 'PROCESSOS',
     Profile: 'PERFIL'
 }
 

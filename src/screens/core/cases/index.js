@@ -5,7 +5,8 @@ import {
     Text,
     StyleSheet,
     ActivityIndicator,
-    FlatList
+    FlatList,
+    TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -47,15 +48,25 @@ const styles = StyleSheet.create({
     divider: {
         borderBottomColor: bgColor,
         borderBottomWidth: 0.5
+    },
+    titleCase: {
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+    numberCase: {
+        color: bgColor,
+        paddingTop: 20
     }
 });
 
-class Processes extends Component {
+class Cases extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            showSearch: false
+            showSearch: false,
+            search: null,
+            filtered: []
         };
     }
 
@@ -68,20 +79,59 @@ class Processes extends Component {
 
         this.setState({
             ...this.state,
-            showSearch 
+            showSearch,
+            search: null
+        });
+    }
+
+    _search(search) {
+        const filtered = this.props.cases.filter(item => {
+            return item.title.toLowerCase().includes(search.toLowerCase());
+        });
+
+        this.setState({
+            ...this.state,
+            search,
+            filtered
         });
     }
 
     _renderItem = ({ item, idx }) => {
         return (
-            <Fragment>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('CasesItem', { item })}>
                 <View style={styles.divider} />
-                <View style={{ padding: 30 }}>
-                    <Text>
+                <View style={{ padding: 20 }}>
+                    <Text style={styles.titleCase}>
                         {item.title}
                     </Text>
+                    <Text style={styles.numberCase}>
+                        Número
+                    </Text>
+                    <Text>
+                        {item.number}
+                    </Text>
                 </View>
-            </Fragment>
+            </TouchableOpacity>
+        );
+    }
+
+    _renderList() {
+        if ( this.state.search ) {
+            return (
+                <FlatList
+                    keyExtractor={(item, id) => item.id}
+                    renderItem={this._renderItem}
+                    data={this.state.filtered}
+                />
+            );
+        }
+
+        return (
+            <FlatList
+                keyExtractor={(item, id) => item.id}
+                renderItem={this._renderItem}
+                data={this.props.cases}
+            />
         );
     }
 
@@ -98,6 +148,8 @@ class Processes extends Component {
                     />
                     <AInput 
                         placeholder="Buscar..."
+                        value={this.state.search}
+                        onChangeText={text => this._search(text)}
                     />
                 </AContainer>
             );
@@ -130,17 +182,27 @@ class Processes extends Component {
             );
         }
 
+        if ( !this.props.loading &&
+             this.props.cases.length <= 0 ) {
+            return (
+                <View style={styles.loading}>
+                    <Icon
+                        name="refresh"
+                        size={40}
+                        color={tintColor}
+                        onPress={() => this.props.load()}
+                    />
+                </View>
+            );
+        }
+
         return (
             <Fragment>
                 <View style={styles.header}>
                     {this._renderHeader()}
                 </View>
                 <View style={styles.content}>
-                    <FlatList
-                        keyExtractor={(item, id) => item.id}
-                        renderItem={this._renderItem}
-                        data={this.props.cases}
-                    />
+                    {this._renderList()}
                 </View>
             </Fragment>
         );
@@ -161,9 +223,9 @@ const actions = {
 
 const mapStateToProps = (state) => {
     return ({
-        loading: state.ProcessesReducer.loading,
-        cases: state.ProcessesReducer.cases
+        loading: state.CasesReducer.loading,
+        cases: state.CasesReducer.cases
     });
 }
 
-export default connect(mapStateToProps, actions)(Processes);
+export default connect(mapStateToProps, actions)(Cases);
