@@ -85,8 +85,13 @@ class Cases extends Component {
     }
 
     _search(search) {
+        search = search.toLowerCase();
+
         const filtered = this.props.cases.filter(item => {
-            return item.title.toLowerCase().includes(search.toLowerCase());
+            let title = item.title.toLowerCase();
+            let number = item.number;
+
+            return title.includes(search) || number.includes(search);
         });
 
         this.setState({
