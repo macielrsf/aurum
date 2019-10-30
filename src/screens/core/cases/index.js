@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import {
     View,
     Button,
-    Text,
     StyleSheet,
     ActivityIndicator,
     FlatList,
@@ -17,10 +16,15 @@ import {
 
 import {
     AContainer,
-    AInput
+    AInput,
+    AText
 } from '~/components';
 
-import { tintColor, bgColor } from '~/helpers/theme';
+import { 
+    tintColor, 
+    bgColor,
+    primaryColor
+} from '~/helpers/theme';
 
 const styles = StyleSheet.create({
     loading: {
@@ -105,15 +109,15 @@ class Cases extends Component {
             <TouchableOpacity onPress={() => this.props.navigation.navigate('CasesItem', { item })}>
                 <View style={styles.divider} />
                 <View style={{ padding: 20 }}>
-                    <Text style={styles.titleCase}>
+                    <AText style={styles.titleCase}>
                         {item.title}
-                    </Text>
-                    <Text style={styles.numberCase}>
+                    </AText>
+                    <AText style={styles.numberCase}>
                         Número
-                    </Text>
-                    <Text>
+                    </AText>
+                    <AText>
                         {item.number}
-                    </Text>
+                    </AText>
                 </View>
             </TouchableOpacity>
         );
@@ -161,9 +165,9 @@ class Cases extends Component {
 
         return (
             <Fragment>
-                <Text style={styles.title}>
+                <AText style={styles.title}>
                     Processos
-                </Text>
+                </AText>
                 <Icon 
                     name="search" 
                     color={tintColor} 

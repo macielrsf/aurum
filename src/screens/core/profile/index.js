@@ -12,6 +12,10 @@ import {
     AButton
 } from '~/components';
 
+import {
+    primaryColor
+} from '~/helpers/theme';
+
 const styles = StyleSheet.create({
     content: {
         alignItems: 'center',
@@ -26,11 +30,13 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 33,
+        color: primaryColor,
         fontWeight: 'bold',
         paddingBottom: 20
     },
     user: {
         fontSize: 16,
+        color: primaryColor,
         fontWeight: 'bold'
     }
 });

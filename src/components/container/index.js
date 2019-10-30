@@ -6,7 +6,8 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
     KeyboardAvoidingView,
-    Platform
+    Platform,
+    ScrollView
 } from 'react-native';
 
 const defaultStyle = StyleSheet.create({
