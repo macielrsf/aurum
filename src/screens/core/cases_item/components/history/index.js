@@ -110,18 +110,36 @@ export default class CasesItemHistory extends Component {
         super(props);
 
         this.state = {
-            order_type: 'date' 
+            case: this.props.case,
+            order_type: 'date',
+            order_key: 'asc'
         };
     }
 
-    _orderChange = (order_type) => {
-        this.setState({
-            order_type
+    _orderChange(order_type, order_key) {
+        let historicals = [...this.state.case.historicals];
+
+        historicals.sort((a, b) => {
+            if ( order_key === 'desc' ) {
+                return a[order_type] > b[order_type];
+            }
+            
+            return a[order_type] <  b[order_type];
         });
+
+        this.setState({
+            ...this.state,
+            order_type,
+            order_key,
+            case: {
+                ...this.state.case,
+                historicals
+            }
+        })
     }
 
     _renderList() {
-        return this.props.case.historicals.map(item => {
+        return this.state.case.historicals.map(item => {
             const day = new Date(item.date).getDate();
             const month = new Date(item.date).getMonth();
             const year = new Date(item.date).getFullYear();
@@ -152,6 +170,26 @@ export default class CasesItemHistory extends Component {
         });
     }
 
+    _renderSortIcon() {
+        if ( this.state.order_key === 'asc' ) {
+            return (
+                <Icon
+                    name="sort-ascending"
+                    size={25}
+                    onPress={() => this._orderChange(this.state.order_type, 'desc')}
+                />
+            );
+        }
+
+        return (
+            <Icon
+                name="sort-descending"
+                size={25}
+                onPress={() => this._orderChange(this.state.order_type, 'asc')}
+            />
+        );
+    }
+
     render() {
         return (
             <AContainer style={styles.container}>
@@ -163,7 +201,7 @@ export default class CasesItemHistory extends Component {
                         <Picker 
                             style={styles.orderType}
                             selectedValue={this.state.order_type} 
-                            onValueChange={this._orderChange}>
+                            onValueChange={value => this._orderChange(value, this.state.order_key)}>
                             {ORDER_TYPE.map(item => {
                                 return (
                                     <Item 
@@ -173,11 +211,7 @@ export default class CasesItemHistory extends Component {
                                 );
                             })}
                         </Picker>
-                        <Icon
-                            name="sort-descending"
-                            size={25}
-                            onPress={() => console.warn('teste')}
-                        />
+                        {this._renderSortIcon()}
                     </Fragment>
                 </View>
                 <View style={{ paddingTop: 20 }}>
