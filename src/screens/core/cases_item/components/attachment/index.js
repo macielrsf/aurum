@@ -43,21 +43,6 @@ export default class CasesItemAttachment extends Component {
 
     constructor(props) {
         super(props);
-        const { items } = this.props;
-
-        this.state = {
-            items
-        };
-    }
-
-    _remove(item) {
-        let items = [...this.state.items];
-        let idx = items.indexOf(item);
-
-        if ( idx !== -1 ) {
-            items.splice(idx, 1);
-            this.setState({ items });
-        }
     }
 
     _renderAttachment = ({ item, idx }) => {
@@ -65,12 +50,12 @@ export default class CasesItemAttachment extends Component {
             <View key={idx} style={styles.content}>
                 <View style={styles.box}>
                     <AText style={styles.title}>
-                        {item.path}
+                        {item.name}
                     </AText>
                 </View> 
                 <Icon 
                     name="close"
-                    onPress={() => this._remove(item)}
+                    onPress={() => this.props.remove(item)}
                     color={primaryColor}
                     size={25}
                 /> 
@@ -79,7 +64,7 @@ export default class CasesItemAttachment extends Component {
     }
 
     _renderContent() {
-        if ( this.state.items.length <= 0 ) {
+        if ( this.props.items.length <= 0 ) {
             return (
                 <AText>
                     Nenhum anexo
@@ -90,7 +75,7 @@ export default class CasesItemAttachment extends Component {
         return (
             <FlatList
                 keyExtractor={item => item.id}
-                data={this.state.items}
+                data={this.props.items}
                 renderItem={this._renderAttachment}
             />
         );

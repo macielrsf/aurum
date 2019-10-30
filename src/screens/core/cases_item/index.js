@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import DocumentPicker from 'react-native-document-picker';
 
 import {
     AContainer,
@@ -74,6 +75,44 @@ class CasesItem extends Component {
         };
     }
 
+    _removeAttachment = (item) => {
+        let attachments = [...this.state.attachments];
+        let idx = attachments.indexOf(item);
+
+        if ( idx !== -1 ) {
+            attachments.splice(idx, 1);
+            this.setState({ attachments });
+        }
+    }
+
+    _documentPicker = async () => {
+        try {
+            const results = await DocumentPicker.pickMultiple({
+                type: [
+                    DocumentPicker.types.images,
+                    DocumentPicker.types.pdf,
+                ]
+            });
+
+            for ( const res of results ) {
+                let pushed = this.state.attachments.concat(res);
+
+                this.setState({
+                    attachments: pushed
+                });
+            }
+        }
+        catch(err) {
+            console.warn(err);
+
+            if (DocumentPicker.isCancel(err)) {
+                // User cancelled the picker, exit any dialogs or menus and move on
+            } else {
+                throw err;
+            }
+        }
+    }
+
     _renderHeader() {
         return (
             <AHeader>
@@ -94,7 +133,7 @@ class CasesItem extends Component {
                             name="attach-file" 
                             size={25}
                             color={tintColor}
-                            onPress={() => console.warn('attach')} 
+                            onPress={this._documentPicker} 
                         />
                     </View>
                 </View>
@@ -141,6 +180,7 @@ class CasesItem extends Component {
                     </AText> 
                     <CasesItemAttachment 
                         items={this.state.attachments}
+                        remove={this._removeAttachment}
                     />
                 </View>
             </View>
