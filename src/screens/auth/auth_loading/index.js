@@ -30,10 +30,17 @@ const styles = StyleSheet.create({
 export default class AuthLoading extends Component {
 
     async componentDidMount() {
-        const auth = await AsyncStorage.getItem('@auth');
-        await this._timeout(1500);
+        const intro = await AsyncStorage.getItem('@intro_showed');
 
-        this.props.navigation.navigate(auth ? 'App' : 'Auth');
+        if ( !intro ) {
+            this.props.navigation.navigate('Intro');
+        }
+        else {
+            const auth = await AsyncStorage.getItem('@auth');
+            await this._timeout(1500);
+
+            this.props.navigation.navigate(auth ? 'App' : 'Auth');
+        }
     }
 
     _timeout = async (ms) => {

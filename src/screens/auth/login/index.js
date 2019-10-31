@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     View,
-    StyleSheet,
     Button,
     Text
 } from 'react-native';
@@ -14,35 +13,12 @@ import {
     AInput
 } from '~/components';
 
+import styles from './styles';
+
 import {
     changeUser,
     changePassword
 } from './actions';
-
-const styles = StyleSheet.create({
-    content: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 0
-    },
-    input: {
-        paddingBottom: 15
-    },
-    button: {
-        paddingTop: 40
-    },
-    header: {
-        alignItems: 'flex-start',
-        justifyContent: 'flex-end',
-        padding: 35,
-        flex: 0.5
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#485357'
-    }
-});
 
 class Login extends Component {
     static navigationOptions = {

@@ -44,6 +44,7 @@ const AppStack = createStackNavigator({
 
 export const AppContainer = createAppContainer(
     createSwitchNavigator({
+        Intro: Screens.Intro,
         AuthLoading: Screens.AuthLoading,
         Auth: AuthStack,
         App: AppStack
