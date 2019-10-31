@@ -12,7 +12,7 @@ After clone this project, enter the project directory through console and execut
 
 Inside Android directory, create `local.properties` file and set Android SDK path:
 
-Example: `sdk.dir = /Users/hubsoft/Android/Sdk`
+Example: `sdk.dir = /Users/home/Android/Sdk`
 
 Lastly:
 
